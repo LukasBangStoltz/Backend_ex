@@ -1,8 +1,11 @@
 package utils;
 
 
+import entities.Hobby;
 import entities.Role;
 import entities.User;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,10 +22,11 @@ public class SetupTestUsers {
     // CHANGE the three passwords below, before you uncomment and execute the code below
     // Also, either delete this file, when users are created or rename and add to .gitignore
     // Whatever you do DO NOT COMMIT and PUSH with the real passwords
-
-    User user = new User("user", "testuser");
-    User admin = new User("admin", "testadmin");
-    User both = new User("user_admin", "testuseradmin");
+    
+    
+    User user = new User("user", "testuser", "lars", "efternavn", "424");
+    User admin = new User("admin", "testadmin", "jens", "efternavn", "2424");
+    User both = new User("user_admin", "testuseradmin", "ostefar", "efternavn", "24424");
 
     if(admin.getUserPass().equals("test")||user.getUserPass().equals("test")||both.getUserPass().equals("test"))
       throw new UnsupportedOperationException("You have not changed the passwords");

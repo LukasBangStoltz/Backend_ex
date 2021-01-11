@@ -1,4 +1,4 @@
-package dto;
+package dtoStartcode;
 
 
 //Håndtering af array MED NAVN. Navnet på listen skal have samme navn. 

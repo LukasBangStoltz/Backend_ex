@@ -1,7 +1,7 @@
 package fetcher;
 
 import com.google.gson.Gson;
-import dto.CountriesDTO;
+import dtoStartcode.CountriesDTO;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;

@@ -1,13 +1,13 @@
 package fetcher;
 
 import com.google.gson.Gson;
-import dto.CombinedDTO;
-import dto.PeopleDTO;
-import dto.PlanetDTO;
-import dto.PlanetsDTO;
-import dto.SpeciesDTO;
-import dto.StarshipDTO;
-import dto.VehicleDTO;
+import dtoStartcode.CombinedDTO;
+import dtoStartcode.PeopleDTO;
+import dtoStartcode.PlanetDTO;
+import dtoStartcode.PlanetsDTO;
+import dtoStartcode.SpeciesDTO;
+import dtoStartcode.StarshipDTO;
+import dtoStartcode.VehicleDTO;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;

@@ -1,7 +1,7 @@
 package facades;
 
 import utils.EMF_Creator;
-import entities.RenameMe;
+
 import entities.Role;
 import entities.User;
 import javax.persistence.EntityManager;
@@ -52,11 +52,11 @@ public class FacadeExampleTest {
 
             Role userRole = new Role("user");
             Role adminRole = new Role("admin");
-            user = new User("user", "test");
+            user = new User("user", "test", "navn", "enavn", "2424");
             user.addRole(userRole);
-            admin = new User("admin", "test");
+            admin = new User("admin", "test", "navnelort", "efterlort", "123123");
             admin.addRole(adminRole);
-            both = new User("user_admin", "test");
+            both = new User("user_admin", "test", "navneost", "efernavnost", "12421455");
             both.addRole(userRole);
             both.addRole(adminRole);
             em.persist(userRole);
