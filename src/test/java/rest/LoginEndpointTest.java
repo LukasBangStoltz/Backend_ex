@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
-//Disabled
+@Disabled
 public class LoginEndpointTest {
 
     private static final int SERVER_PORT = 7777;
@@ -71,11 +71,11 @@ public class LoginEndpointTest {
 
             Role userRole = new Role("user");
             Role adminRole = new Role("admin");
-            User user = new User("user", "test");
+            User user = new User("user", "test", "dummy1", "dummy2", "1551");
             user.addRole(userRole);
-            User admin = new User("admin", "test");
+            User admin = new User("admin", "test", "dummy3", "dummy4", "1241245");
             admin.addRole(adminRole);
-            User both = new User("user_admin", "test");
+            User both = new User("user_admin", "test", "dummy5", "dummy6", "523523523");
             both.addRole(userRole);
             both.addRole(adminRole);
             em.persist(userRole);
