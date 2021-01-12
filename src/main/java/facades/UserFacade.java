@@ -1,7 +1,7 @@
 package facades;
 
 import DTO.UserDTO;
-import com.sun.org.apache.xalan.internal.res.XSLTErrorResources_ko;
+
 import entities.User;
 import errorhandling.PersonNotFoundException;
 import java.util.ArrayList;
@@ -9,14 +9,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+
 import security.errorhandling.AuthenticationException;
 import utils.UserFacadeInterface;
 
 /**
  * @author lam@cphbusiness.dk
  */
-public class UserFacade implements UserFacadeInterface{
+public class UserFacade implements UserFacadeInterface {
 
     private static EntityManagerFactory emf;
     private static UserFacade instance;
@@ -51,36 +51,33 @@ public class UserFacade implements UserFacadeInterface{
         return user;
     }
 
-    
     public UserDTO getUserByPhone(String phone) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
-        
-        try{
+
+        try {
             Query q1 = em.createQuery("SELECT u FROM User u WHERE u.phone = :phone");
             q1.setParameter("phone", phone);
             User user = (User) q1.getSingleResult();
-            if(user.getfName()==null){
+            if (user.getfName() == null) {
                 throw new PersonNotFoundException("No person, with given phonenumber in database");
             }
             return new UserDTO(user);
-        }finally{
+        } finally {
             em.close();
         }
-        
-        
-        
+
     }
 
     @Override
     public List<UserDTO> getAllUsersByHobby(String hobby) {
-                EntityManager em = emf.createEntityManager();
-                
+        EntityManager em = emf.createEntityManager();
+
         Query query = em.createQuery("SELECT u FROM User u JOIN u.hobbyList h WHERE h.name = :hobby", User.class);
         query.setParameter("hobby", hobby);
-        List <User> userList= query.getResultList();
-        
+        List<User> userList = query.getResultList();
+
         List<UserDTO> temp = new ArrayList();
-        
+
         return temp;
     }
 
@@ -114,5 +111,3 @@ public class UserFacade implements UserFacadeInterface{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
-    
-
