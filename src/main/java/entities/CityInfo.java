@@ -26,11 +26,11 @@ public class CityInfo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String zip;
-    
+
     private String city;
-    
-    @OneToMany(mappedBy = "cityInfo", cascade = CascadeType.PERSIST)
-    private List<Address> addresses; 
+
+    @OneToMany(mappedBy = "cityInfo")
+    private List<Address> addresses;
 
     public CityInfo(String zip, String city) {
         this.zip = zip;
@@ -61,12 +61,11 @@ public class CityInfo implements Serializable {
         return addresses;
     }
 
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
+    public void addAddresses(Address address) {
+        if(address!= null){
+            this.addresses.add(address);
+            address.setCityInfo(this);
+        }
     }
-    
-    
 
-    
-    
 }

@@ -72,6 +72,9 @@ public class Address implements Serializable {
 
     public void setCityInfo(CityInfo cityInfo) {
         this.cityInfo = cityInfo;
+        if(cityInfo!= null){
+            cityInfo.addAddresses(this);
+        }
     }
 
     public Long getId() {
