@@ -70,7 +70,7 @@ public class FacadeExampleTest {
             user.addRole(userRole);
             admin = new User("admin", "test", "navnelort", "efterlort", "123123");
             admin.addRole(adminRole);
-            both = new User("user_admin", "test", "navneost", "efernavnost", "12421455");
+            both = new User("user_admin", "test", "navneost", "efernavnostjaja", "12421455");
             both.addRole(userRole);
             both.addRole(adminRole);
             em.persist(userRole);
