@@ -37,16 +37,16 @@ public class DemoResource {
     private static String cachedResponse;
     @Context
     private UriInfo context;
-
+    
     @Context
     SecurityContext securityContext;
-
+        
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
         return "{\"msg\":\"Hello anonymous\"}";
     }
-
+    
     //Just to verify if the database is setup
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ public class DemoResource {
             em.close();
         }
     }
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("user")
@@ -71,7 +71,7 @@ public class DemoResource {
         String thisuser = securityContext.getUserPrincipal().getName();
         return "{\"msg\": \"Hello to User: " + thisuser + "\"}";
     }
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("admin")

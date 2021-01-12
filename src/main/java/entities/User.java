@@ -148,4 +148,12 @@ public class User implements Serializable {
         roleList.add(userRole);
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
 }
