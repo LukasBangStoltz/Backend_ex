@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.com/LukasBangStoltz/myStartCode_Backend.svg?branch=master)](https://travis-ci.com/LukasBangStoltz/myStartCode_Backend)
+[![Build Status](https://travis-ci.com/LukasBangStoltz/Backend_ex.svg?branch=master)](https://travis-ci.com/LukasBangStoltz/Backend_ex)
 Clone this startcode, and the matching startcode for the client-side: https://github.com/fiske-halsen/CA3_Frontend
 Before you begin, make sure that your docker-containers are running locally. Go to pom file and change the remote-server, to ready your ci-pipeline
 
