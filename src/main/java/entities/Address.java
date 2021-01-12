@@ -33,7 +33,7 @@ public class Address implements Serializable {
     @OneToMany(mappedBy = "address")
     private List<User> users;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private CityInfo cityInfo;
 
     public Address() {
@@ -73,7 +73,7 @@ public class Address implements Serializable {
     public void setCityInfo(CityInfo cityInfo) {
         this.cityInfo = cityInfo;
         if(cityInfo!= null){
-            cityInfo.addAddresses(this);
+            cityInfo.getAddresses().add(this);
         }
     }
 

@@ -1,9 +1,14 @@
 package facades;
 
+import DTO.UserDTO;
+import entities.Address;
+import entities.CityInfo;
+import entities.Hobby;
 import utils.EMF_Creator;
 
 import entities.Role;
 import entities.User;
+import errorhandling.PersonNotFoundException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -25,13 +30,22 @@ public class FacadeExampleTest {
     private static User admin;
     private static User both;
 
+    private Address a1 = new Address("ostegade");
+    private Address a2 = new Address("pikgade");
+
+    private CityInfo cityInfo1 = new CityInfo(2250, "gentofte");
+    private CityInfo cityInfo2 = new CityInfo(4422, "osteby");
+
+    private Hobby h1 = new Hobby("fodbold");
+    private Hobby h2 = new Hobby("håndbold");
+
     public FacadeExampleTest() {
     }
 
     @BeforeAll
     public static void setUpClass() {
-       emf = EMF_Creator.createEntityManagerFactoryForTest();
-       facade = UserFacade.getUserFacade(emf);
+        emf = EMF_Creator.createEntityManagerFactoryForTest();
+        facade = UserFacade.getUserFacade(emf);
     }
 
     @AfterAll
@@ -56,7 +70,7 @@ public class FacadeExampleTest {
             user.addRole(userRole);
             admin = new User("admin", "test", "navnelort", "efterlort", "123123");
             admin.addRole(adminRole);
-            both = new User("user_admin", "test", "navneost", "efernavnost", "12421455");
+            both = new User("user_admin", "test", "navneost", "efernavnostjaja", "12421455");
             both.addRole(userRole);
             both.addRole(adminRole);
             em.persist(userRole);
@@ -70,6 +84,7 @@ public class FacadeExampleTest {
             em.close();
         }
     }
+
     @AfterEach
     public void tearDown() {
 //        Remove any data after each test was run
@@ -82,4 +97,13 @@ public class FacadeExampleTest {
         assertEquals("admin", admin.getUserName());
     }
 
+    @Test
+    public void testGetUserByPhone() throws PersonNotFoundException {
+        User test123 = new User("uname", "upass", "fname", "lname", "22222222");
+
+        UserDTO userDTO = facade.getUserByPhone("22222222");
+        String expName = "fname";
+
+        assertEquals(expName, userDTO.fName);
+    }
 }

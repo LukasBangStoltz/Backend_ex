@@ -25,14 +25,14 @@ public class CityInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    private String zip;
+    private long zip;
 
     private String city;
 
     @OneToMany(mappedBy = "cityInfo")
     private List<Address> addresses;
 
-    public CityInfo(String zip, String city) {
+    public CityInfo(long zip, String city) {
         this.zip = zip;
         this.city = city;
         this.addresses = new ArrayList();
@@ -41,11 +41,11 @@ public class CityInfo implements Serializable {
     public CityInfo() {
     }
 
-    public String getZip() {
+    public long getZip() {
         return zip;
     }
 
-    public void setZip(String zip) {
+    public void setZip(long zip) {
         this.zip = zip;
     }
 
