@@ -17,18 +17,23 @@ import java.util.List;
 public class UserDTO {
 
     public String userName;
+    public String userPass;
     public String fName;
     public String lName;
     public String street;
     public List<HobbyDTO> hobby;
     public String phone;
+    public long zip;
+    public String city;
 
     public UserDTO(User user) {
         this.userName = user.getUserName();
+        this.userPass = user.getUserPass();
         this.fName = user.getfName();
         this.lName = user.getlName();
         this.street = user.getAddress().getStreet();
-
+        this.city = user.getAddress().getCityInfo().getCity();
+        this.zip = user.getAddress().getCityInfo().getZip();
         this.phone = user.getPhone();
 
         this.hobby = new ArrayList();
