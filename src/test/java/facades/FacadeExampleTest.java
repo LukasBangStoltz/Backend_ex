@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import security.errorhandling.AuthenticationException;
 
 //Uncomment the line below, to temporarily disable this test
-@Disabled
+
 public class FacadeExampleTest {
 
     private static EntityManagerFactory emf;
@@ -73,17 +73,17 @@ public class FacadeExampleTest {
             a2.setCityInfo(c1);
             a3.setCityInfo(c2);
 
-            user = new User("test1", "test1", "fName1", "lName1", "45142241");
+            user = new User("user", "userpas", "userFname", "userLname", "45142241");
             user.addRole(userRole);
             user.addHobbies(h1);
             user.setAddress(a1);
 
-            admin = new User("test2", "test2", "fName2", "lName2", "45874412");
+            admin = new User("admin", "adminpas", "adminFname", "adminLname", "45874412");
             admin.addRole(adminRole);
             admin.addHobbies(h2);
             admin.setAddress(a2);
 
-            both = new User("test3", "test3", "fName3", "lname3", "65887410");
+            both = new User("both", "bothpas", "bothFname", "bothLname", "65887410");
             both.addRole(userRole);
             both.addRole(adminRole);
             both.addHobbies(h1);
@@ -121,21 +121,21 @@ public class FacadeExampleTest {
     // TODO: Delete or change this method 
     @Test
     public void tesVverifyUser() throws AuthenticationException {
-        User user = facade.getVeryfiedUser("test2", "test2");
-        assertEquals("test2", admin.getUserName());
+        User user = facade.getVeryfiedUser("admin", "adminpas");
+        assertEquals("admin", admin.getUserName());
     }
 
     @Test
     public void testUserByPhone() throws PersonNotFoundException {
         UserDTO u = facade.getUserByPhone("45142241");
-        String expectedfName = "fName1";
+        String expectedfName = "userFname";
         assertEquals(expectedfName, u.fName);
     }
 
     @Test
     public void testGetAllUsersByHobby() {
         List<UserDTO> allUsers = facade.getAllUsersByHobby("Fodbold");
-        int expectedSize = 2;
+        int expectedSize = 3;
         assertEquals(expectedSize, allUsers.size());
     }
     
@@ -143,7 +143,7 @@ public class FacadeExampleTest {
     @Test
     public void testCreateUser(){
         User user = new User("uName", "uPass", "fName", "lName", "phonenr");
-        user.addHobbies(h1);
+        user.addHobbies(h2);
         user.setAddress(a1);
         
         
@@ -151,6 +151,34 @@ public class FacadeExampleTest {
         UserDTO u = facade.createUser(new UserDTO(user));
         
         assertEquals("fName", u.fName);
+        
+        
+    }
+    
+    @Test
+    public void testEditUser()throws PersonNotFoundException{
+        both.setfName("newFName");
+        
+        UserDTO eDTO = facade.editUser(new UserDTO(both));
+        
+        assertEquals(eDTO.fName, "newFName");
+        
+    }
+    
+    
+    @Test
+    public void testAddHobby()throws PersonNotFoundException{
+        
+        
+        admin.addHobbies(h1);
+        
+        UserDTO uDTO = facade.addHobby(new UserDTO(admin));
+        
+        
+        assertEquals(2, uDTO.hobby.size());
+       
+        
+        
         
         
     }
