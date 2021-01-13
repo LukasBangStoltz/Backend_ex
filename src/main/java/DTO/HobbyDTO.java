@@ -13,7 +13,7 @@ import entities.Hobby;
  */
 public class HobbyDTO {
 
-    private String name;
+    public String name;
 
     public HobbyDTO() {
     }
@@ -23,12 +23,6 @@ public class HobbyDTO {
 
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    
 
 }

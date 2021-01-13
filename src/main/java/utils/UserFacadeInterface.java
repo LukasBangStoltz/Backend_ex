@@ -21,7 +21,7 @@ public interface UserFacadeInterface {
 
     public abstract List<UserDTO> getAllUsersByCity(String city);
 
-    public abstract int getUserCountByHobby(String hobby);
+    public abstract long getUserCountByHobby(String hobby);
 
     public abstract List<Long> getAllZipCodes();
 

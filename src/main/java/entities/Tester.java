@@ -9,6 +9,7 @@ import DTO.UserDTO;
 import errorhandling.PersonNotFoundException;
 import facades.UserFacade;
 import java.awt.BorderLayout;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -58,5 +59,17 @@ public class Tester {
         em.getTransaction().commit();
         UserDTO tester123 = userFacade.getUserByPhone("2222");
         System.out.println(tester123.fName);
+
+        List<UserDTO> dtolist = userFacade.getAllUsersByHobby("fodbold");
+
+        System.out.println(dtolist);
+        long counts = userFacade.getUserCountByHobby("fodbold");
+
+        System.out.println("her står der forhåbentligt 2:" + counts);
+
+        List<Long> zips = userFacade.getAllZipCodes();
+
+        System.out.println("Her kommer zips:" + zips);
+
     }
 }
