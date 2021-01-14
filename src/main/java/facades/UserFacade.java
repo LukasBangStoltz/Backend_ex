@@ -174,18 +174,14 @@ public class UserFacade implements UserFacadeInterface {
             }
             address.setCityInfo(cityInfo);
 
-            
-            
-            
-            
             for (HobbyDTO hobby : userDTO.hobby) {
                 try {
-                    
-                Query q2 = em.createQuery("SELECT h FROM Hobby h WHERE h.name = :hobby", Hobby.class);
-                q2.setParameter("hobby", hobby.name);
-                h = (Hobby) q2.getSingleResult();
 
-                } catch (Exception e) {
+                    Query q2 = em.createQuery("SELECT h FROM Hobby h WHERE h.name = :hobby", Hobby.class);
+                    q2.setParameter("hobby", hobby.name);
+                    h = (Hobby) q2.getSingleResult();
+
+                } catch (NoResultException e) {
                     h = null;
                 }
                 if (h == null) {

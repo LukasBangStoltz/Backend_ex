@@ -81,7 +81,7 @@ public class Tester {
         Address address123 = new Address("Nyvej");
         CityInfo newCity = new CityInfo(5000, "newcity");
         
-        address123.setCityInfo(newCity);
+        address123.setCityInfo(cityInfo1);
         
         testUser123.setAddress(address123);
         
