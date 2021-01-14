@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import security.errorhandling.AuthenticationException;
@@ -151,6 +152,7 @@ public class UserFacade implements UserFacadeInterface {
 
         User user = new User(userDTO.userName, userDTO.userPass, userDTO.fName, userDTO.lName, userDTO.phone);
         try {
+
             Query q1 = em.createQuery("SELECT a FROM Address a WHERE a.street = :street", Address.class);
             q1.setParameter("street", userDTO.street);
             Address address = (Address) q1.getSingleResult();
@@ -158,6 +160,7 @@ public class UserFacade implements UserFacadeInterface {
                 address = new Address(userDTO.street);
             }
             user.setAddress(address);
+        
 
             CityInfo cityInfo = em.find(CityInfo.class, userDTO.zip);
             if (cityInfo == null) {
@@ -178,7 +181,6 @@ public class UserFacade implements UserFacadeInterface {
             em.getTransaction().begin();
             em.persist(user);
             em.getTransaction().commit();
-
             return new UserDTO(user);
 
         } finally {
@@ -257,13 +259,69 @@ public class UserFacade implements UserFacadeInterface {
     }
 
     @Override
-    public UserDTO deleteHobby(UserDTO userDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public UserDTO deleteHobby(String userName, String hobby) throws PersonNotFoundException {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            User user = em.find(User.class, userName);
+            if (user == null) {
+                throw new PersonNotFoundException("Person not found in DB ");
+            }
+
+            Query query = em.createQuery("SELECT h FROM Hobby h WHERE h.name = :hobby");
+            query.setParameter("hobby", hobby);
+            Hobby dbHobby = (Hobby) query.getSingleResult();
+
+            user.removeHobbie(dbHobby);
+
+            em.getTransaction().begin();
+            em.merge(user);
+            em.getTransaction().commit();
+
+            return new UserDTO(user);
+        } finally {
+            em.close();
+        }
+
     }
 
     @Override
-    public UserDTO deleteUser(String userName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public UserDTO deleteUser(UserDTO userDTO) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            User user = em.find(User.class, userDTO.userName);
+
+            for (Hobby h : user.getHobbyList()) {
+                if (h.getUsers().size() <= 1) {
+                    em.remove(h);
+                } else {
+                    h.getUsers().remove(h);
+                }
+            }
+
+            if (user.getAddress().getUsers().size() <= 1) {
+                em.remove(user.getAddress());
+
+            } else {
+                user.getAddress().getUsers().remove(user);
+            }
+            if (user.getAddress().getCityInfo().getAddresses().size() <= 1) {
+                em.remove(user.getAddress().getCityInfo());
+            } else {
+                user.getAddress().getCityInfo().getAddresses().remove(user.getAddress());
+            }
+
+            em.getTransaction().begin();
+            em.remove(user);
+
+            em.getTransaction().commit();
+
+            return new UserDTO(user);
+        } finally {
+            em.close();
+        }
+
     }
 
 }

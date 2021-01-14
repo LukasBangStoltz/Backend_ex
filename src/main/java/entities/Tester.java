@@ -32,6 +32,9 @@ public class Tester {
         User user2 = new User("ole", "hemmeligt", "ole", "veddel", "2222");
 
         Hobby hobby1 = new Hobby("fodbold");
+        Hobby hobby2 = new Hobby("håndbold");
+        Hobby hobby3 = new Hobby("tennis");
+        Hobby hobby4 = new Hobby("badminton");
 
         Address address2 = new Address("grimvej");
         Address address1 = new Address("flotvej");
@@ -39,6 +42,8 @@ public class Tester {
         Role role = new Role("user");
 
         user1.addHobbies(hobby1);
+        user1.addHobbies(hobby2);
+        user1.addHobbies(hobby3);
         user2.addHobbies(hobby1);
 
         address1.setCityInfo(cityInfo1);
@@ -70,6 +75,10 @@ public class Tester {
         List<Long> zips = userFacade.getAllZipCodes();
 
         System.out.println("Her kommer zips:" + zips);
+        
+        
+        
+        
 
     }
 }
