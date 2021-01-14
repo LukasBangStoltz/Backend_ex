@@ -76,8 +76,18 @@ public class Tester {
 
         System.out.println("Her kommer zips:" + zips);
         
+        User testUser123 = new User("testeruname", "testerupass", "testerfname", "testerlname", "phonenrr");
+        Hobby hobby123 = new Hobby ("gamingjaja");
+        Address address123 = new Address("Nyvej");
+        CityInfo newCity = new CityInfo(5000, "newcity");
         
+        address123.setCityInfo(newCity);
         
+        testUser123.setAddress(address123);
+        
+        testUser123.addHobbies(hobby123);
+        
+        UserDTO plsVirk = userFacade.createUser(new UserDTO(testUser123));
         
 
     }

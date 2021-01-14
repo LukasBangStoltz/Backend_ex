@@ -151,16 +151,22 @@ public class UserFacade implements UserFacadeInterface {
         EntityManager em = emf.createEntityManager();
 
         User user = new User(userDTO.userName, userDTO.userPass, userDTO.fName, userDTO.lName, userDTO.phone);
+        Address address;
+        Hobby h;
         try {
+            try {
 
-            Query q1 = em.createQuery("SELECT a FROM Address a WHERE a.street = :street", Address.class);
-            q1.setParameter("street", userDTO.street);
-            Address address = (Address) q1.getSingleResult();
+                Query q1 = em.createQuery("SELECT a FROM Address a WHERE a.street = :street", Address.class);
+                q1.setParameter("street", userDTO.street);
+                address = (Address) q1.getSingleResult();
+            } catch (NoResultException e) {
+                address = null;
+            }
+
             if (address == null) {
                 address = new Address(userDTO.street);
             }
             user.setAddress(address);
-        
 
             CityInfo cityInfo = em.find(CityInfo.class, userDTO.zip);
             if (cityInfo == null) {
@@ -168,10 +174,20 @@ public class UserFacade implements UserFacadeInterface {
             }
             address.setCityInfo(cityInfo);
 
+            
+            
+            
+            
             for (HobbyDTO hobby : userDTO.hobby) {
+                try {
+                    
                 Query q2 = em.createQuery("SELECT h FROM Hobby h WHERE h.name = :hobby", Hobby.class);
                 q2.setParameter("hobby", hobby.name);
-                Hobby h = (Hobby) q2.getSingleResult();
+                h = (Hobby) q2.getSingleResult();
+
+                } catch (Exception e) {
+                    h = null;
+                }
                 if (h == null) {
                     h = new Hobby(hobby.name);
                 }
