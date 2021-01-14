@@ -203,7 +203,7 @@ public class UserFacade implements UserFacadeInterface {
     @Override
     public UserDTO editUser(UserDTO userDTO) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
-
+        Address address;
         try {
             User user = em.find(User.class, userDTO.userName);
             if (user == null) {
@@ -214,9 +214,14 @@ public class UserFacade implements UserFacadeInterface {
             user.setfName(userDTO.fName);
             user.setlName(userDTO.lName);
 
-            Query q1 = em.createQuery("SELECT a FROM Address a WHERE a.street = :street", Address.class);
-            q1.setParameter("street", userDTO.street);
-            Address address = (Address) q1.getSingleResult();
+            try {
+
+                Query q1 = em.createQuery("SELECT a FROM Address a WHERE a.street = :street", Address.class);
+                q1.setParameter("street", userDTO.street);
+                address = (Address) q1.getSingleResult();
+            } catch (NoResultException e) {
+                address = null;
+            }
             if (address == null) {
                 address = new Address(userDTO.street);
             }
@@ -242,6 +247,7 @@ public class UserFacade implements UserFacadeInterface {
     @Override
     public UserDTO addHobby(UserDTO userDTO) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
+        Hobby h;
         try {
             User user = em.find(User.class, userDTO.userName);
             if (user == null) {
@@ -250,9 +256,14 @@ public class UserFacade implements UserFacadeInterface {
 
             HobbyDTO hobby = userDTO.hobby.get(userDTO.hobby.size() - 1);
 
-            Query q2 = em.createQuery("SELECT h FROM Hobby h WHERE h.name = :hobby", Hobby.class);
-            q2.setParameter("hobby", hobby.name);
-            Hobby h = (Hobby) q2.getSingleResult();
+            try {
+
+                Query q2 = em.createQuery("SELECT h FROM Hobby h WHERE h.name = :hobby", Hobby.class);
+                q2.setParameter("hobby", hobby.name);
+                h = (Hobby) q2.getSingleResult();
+            } catch (NoResultException e) {
+                h = null;
+            }
             if (h == null) {
                 h = new Hobby(hobby.name);
 
@@ -273,16 +284,21 @@ public class UserFacade implements UserFacadeInterface {
     @Override
     public UserDTO deleteHobby(String userName, String hobby) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
-
+        Hobby dbHobby;
         try {
             User user = em.find(User.class, userName);
             if (user == null) {
                 throw new PersonNotFoundException("Person not found in DB ");
             }
 
-            Query query = em.createQuery("SELECT h FROM Hobby h WHERE h.name = :hobby");
-            query.setParameter("hobby", hobby);
-            Hobby dbHobby = (Hobby) query.getSingleResult();
+            try {
+                Query query = em.createQuery("SELECT h FROM Hobby h WHERE h.name = :hobby");
+                query.setParameter("hobby", hobby);
+                dbHobby = (Hobby) query.getSingleResult();
+
+            } catch (NoResultException e) {
+                throw new PersonNotFoundException("Hobby not found");
+            }
 
             user.removeHobbie(dbHobby);
 
