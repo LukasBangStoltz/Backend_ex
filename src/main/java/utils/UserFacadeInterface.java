@@ -31,8 +31,8 @@ public interface UserFacadeInterface {
     
     public abstract UserDTO addHobby (UserDTO userDTO) throws PersonNotFoundException;
     
-    public abstract UserDTO deleteHobby (UserDTO userDTO);
+    public abstract UserDTO deleteHobby (String userName, String hobby) throws PersonNotFoundException;
 
-    public abstract UserDTO deleteUser(String userName);
+    public abstract UserDTO deleteUser(UserDTO userDTO);
 
 }

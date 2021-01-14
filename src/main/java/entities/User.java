@@ -118,7 +118,13 @@ public class User implements Serializable {
 
     }
 
-  
+    public void removeHobbie(Hobby hobby){
+        if (hobby != null) {
+            this.hobbyList.remove(hobby);
+            hobby.getUsers().remove(this);
+        }
+        
+    }
 
     public String getUserName() {
         return userName;
