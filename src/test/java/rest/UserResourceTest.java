@@ -76,10 +76,17 @@ public class UserResourceTest {
 
         h1 = new Hobby("Fodbold");
         h2 = new Hobby("Tennis");
+        em.getTransaction().begin();
 
-        //Delete existing users and roles to get a "fresh" database
-//            em.createQuery("delete from User").executeUpdate();
-//            em.createQuery("delete from Role").executeUpdate();
+        em.createNativeQuery("DELETE FROM user_roles").executeUpdate();
+        em.createNativeQuery("DELETE FROM roles").executeUpdate();
+        em.createNativeQuery("DELETE FROM HOBBY_users").executeUpdate();
+        em.createNativeQuery("DELETE FROM HOBBY").executeUpdate();
+        em.createNativeQuery("DELETE FROM users").executeUpdate();
+        em.createNativeQuery("DELETE FROM ADDRESS").executeUpdate();
+        em.createNativeQuery("DELETE FROM CITYINFO").executeUpdate();
+
+        em.getTransaction().commit();
         Role userRole = new Role("user");
         Role adminRole = new Role("admin");
 
@@ -128,23 +135,6 @@ public class UserResourceTest {
         httpServer.shutdownNow();
     }
 
-    // Setup the DataBase (used by the test-server and this test) in a known state BEFORE EACH TEST
-    //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
-//    @BeforeEach
-//    public void setUp() {
-//        EntityManager em = emf.createEntityManager();
-//        r1 = new RenameMe("Some txt", "More text");
-//        r2 = new RenameMe("aaa", "bbb");
-//        try {
-//            em.getTransaction().begin();
-//            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-//            em.persist(r1);
-//            em.persist(r2);
-//            em.getTransaction().commit();
-//        } finally {
-//            em.close();
-//        }
-//    }
     @Test
     public void testServerIsUp() {
         given().when().get("/users").then().statusCode(200);
@@ -179,7 +169,7 @@ public class UserResourceTest {
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("size()", equalTo(2));
     }
-    
+
     @Test
     public void testGetUserCountByHobby() {
         given()
@@ -189,7 +179,7 @@ public class UserResourceTest {
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("count", equalTo(2));
     }
-    
+
     @Test
     public void testGetAllZipCodes() {
         given()
@@ -199,7 +189,5 @@ public class UserResourceTest {
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("size()", equalTo(2));
     }
-    
-    
 
 }

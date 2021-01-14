@@ -49,6 +49,18 @@ public class UserFacadeTest {
         facade = UserFacade.getUserFacade(emf);
         EntityManager em = emf.createEntityManager();
         
+        em.getTransaction().begin();
+        em.createNativeQuery("DELETE FROM user_roles").executeUpdate();
+        em.createNativeQuery("DELETE FROM roles").executeUpdate();
+        em.createNativeQuery("DELETE FROM HOBBY_users").executeUpdate();
+        em.createNativeQuery("DELETE FROM HOBBY").executeUpdate();
+        em.createNativeQuery("DELETE FROM users").executeUpdate();
+        em.createNativeQuery("DELETE FROM ADDRESS").executeUpdate();
+        em.createNativeQuery("DELETE FROM CITYINFO").executeUpdate();
+        em.getTransaction().commit();
+        
+        
+        
         a1 = new Address("Ostegade 2");
         a2 = new Address("Kælkegade 4");
         a3 = new Address("Kosvinget 54");
