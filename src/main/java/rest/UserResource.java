@@ -71,6 +71,14 @@ public class UserResource {
         return GSON.toJson(userList);
 
     }
+    @Path("hobbycount/{hobby}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getUserCOuntByHobby(@PathParam("hobby") String hobby) {
+        long myCount = FACADE.getUserCountByHobby(hobby);
+        return "{\"count\":" + myCount + "}";
+
+    }
 
     @Path("city/{city}")
     @GET
@@ -81,14 +89,6 @@ public class UserResource {
 
     }
 
-    @Path("hobbycount/{hobby}")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public String getUserCOuntByHobby(@PathParam("hobby") String hobby) {
-        long myCount = FACADE.getUserCountByHobby(hobby);
-        return GSON.toJson(myCount);
-
-    }
 
     @Path("allzips")
     @GET
@@ -137,6 +137,14 @@ public class UserResource {
     @Produces({MediaType.APPLICATION_JSON})
     public void setUpUsers() {
         SetupTestUsers.setUpUsers();
+    }
+    
+    @Path("catfacts")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getCountries() throws InterruptedException, ExecutionException, TimeoutException, IOException {
+        String result = fetcher.CatFactFetcher.catResponse(ES, GSON);
+        return result;
     }
 
 }

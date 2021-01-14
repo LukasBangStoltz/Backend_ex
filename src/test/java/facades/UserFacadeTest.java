@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import security.errorhandling.AuthenticationException;
 
 //Uncomment the line below, to temporarily disable this test
-public class FacadeExampleTest {
+public class UserFacadeTest {
     
     private static EntityManagerFactory emf;
     private static UserFacade facade;
@@ -40,7 +40,7 @@ public class FacadeExampleTest {
     private static Hobby h1;
     private static Hobby h2;
     
-    public FacadeExampleTest() {
+    public UserFacadeTest() {
     }
     
     @BeforeAll
@@ -48,6 +48,18 @@ public class FacadeExampleTest {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         facade = UserFacade.getUserFacade(emf);
         EntityManager em = emf.createEntityManager();
+        
+        em.getTransaction().begin();
+        em.createNativeQuery("DELETE FROM user_roles").executeUpdate();
+        em.createNativeQuery("DELETE FROM roles").executeUpdate();
+        em.createNativeQuery("DELETE FROM HOBBY_users").executeUpdate();
+        em.createNativeQuery("DELETE FROM HOBBY").executeUpdate();
+        em.createNativeQuery("DELETE FROM users").executeUpdate();
+        em.createNativeQuery("DELETE FROM ADDRESS").executeUpdate();
+        em.createNativeQuery("DELETE FROM CITYINFO").executeUpdate();
+        em.getTransaction().commit();
+        
+        
         
         a1 = new Address("Ostegade 2");
         a2 = new Address("Kælkegade 4");
@@ -59,8 +71,6 @@ public class FacadeExampleTest {
         h1 = new Hobby("Fodbold");
         h2 = new Hobby("Tennis");
         
-        try {
-            em.getTransaction().begin();
             //Delete existing users and roles to get a "fresh" database
 //            em.createQuery("delete from User").executeUpdate();
 //            em.createQuery("delete from Role").executeUpdate();
@@ -89,6 +99,8 @@ public class FacadeExampleTest {
             both.addHobbies(h2);
             both.setAddress(a3);
             
+        try {
+            em.getTransaction().begin();
             em.persist(userRole);
             em.persist(adminRole);
             em.persist(user);
