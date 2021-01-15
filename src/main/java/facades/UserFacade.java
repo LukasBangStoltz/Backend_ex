@@ -5,6 +5,7 @@ import DTO.UserDTO;
 import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
+import entities.Role;
 
 import entities.User;
 import errorhandling.PersonNotFoundException;
@@ -189,7 +190,8 @@ public class UserFacade implements UserFacadeInterface {
                 }
                 user.addHobbies(h);
             }
-
+            Role role = em.find(Role.class, "user");
+            user.addRole(role);
             em.getTransaction().begin();
             em.persist(user);
             em.getTransaction().commit();
