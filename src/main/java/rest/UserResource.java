@@ -96,7 +96,7 @@ public class UserResource {
     public String getAllZips() {
         List<Long> zipList = FACADE.getAllZipCodes();
 
-        return GSON.toJson(zipList);
+        return GSON.toJson(zipList) ;
 
     }
     
@@ -132,7 +132,7 @@ public class UserResource {
         return "{\"msg\": \"Hello to (admin) User: " + thisuser + "\"}";
     }
 
-    @Path("setUpUsers")
+    @Path("setupusers")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public void setUpUsers() {

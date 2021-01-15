@@ -1,6 +1,8 @@
 package utils;
 
 
+import entities.Address;
+import entities.CityInfo;
 import entities.Hobby;
 import entities.Role;
 import entities.User;
@@ -27,7 +29,21 @@ public class SetupTestUsers {
     User user = new User("user", "testuser", "lars", "efternavn", "424");
     User admin = new User("admin", "testadmin", "jens", "efternavn", "2424");
     User both = new User("user_admin", "testuseradmin", "ostefar", "efternavn", "24424");
-
+      CityInfo cityInfo = new CityInfo(2920, "Charlottenlund");
+      Address address = new Address("Hovmarksvej");
+      cityInfo.addAddresses(address);
+      Hobby hobby = new Hobby("Fodbold");
+      Hobby hobby2 = new Hobby("Tennis");
+      user.addHobbies(hobby);
+      user.setAddress(address);
+      admin.addHobbies(hobby);
+      admin.addHobbies(hobby2);
+      admin.setAddress(address);
+      both.addHobbies(hobby);
+      both.setAddress(address);
+      
+      
+      
     if(admin.getUserPass().equals("test")||user.getUserPass().equals("test")||both.getUserPass().equals("test"))
       throw new UnsupportedOperationException("You have not changed the passwords");
 
